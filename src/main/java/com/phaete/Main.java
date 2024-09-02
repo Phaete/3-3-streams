@@ -1,5 +1,8 @@
 package com.phaete;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -87,8 +90,60 @@ public class Main {
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.toList());
         System.out.println("Sorted list: " + newNumberList);
+        System.out.println("_____________________________");
 
 
+
+        // Bonus
+        System.out.println("Bonus 1 - print students.csv");
+        try {
+            Files.lines(Path.of("src/main/resources/students.csv"))
+                    .forEach(System.out::println);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("_____________________________");
+
+        System.out.println("Bonus 2 - remove header from students.csv");
+        try {
+            Files.lines(Path.of("src/main/resources/students.csv"))
+                    .skip(1)
+                    .forEach(System.out::println);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("_____________________________");
+
+        System.out.println("Bonus 4 - remove invalid and duplicate lines");
+        try {
+            Files.lines(Path.of("src/main/resources/students.csv"))
+                    .skip(1)
+                    .distinct()
+                    .filter(line -> !line.isEmpty())
+                    .forEach(System.out::println);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("_____________________________");
+
+        System.out.println("Bonus 3 - convert each line into the class student");
+        List<Student> studentList = new ArrayList<>();
+        try {
+            Files.lines(Path.of("src/main/resources/students.csv"))
+                    .skip(1)
+                    .distinct()
+                    .filter(line -> !line.isEmpty())
+                    .forEach(line -> studentList.add(new Student(
+                            Integer.parseInt(line.split(",")[0]), // id
+                            line.split(",")[1], // firstName
+                            Integer.parseInt(line.split(",")[2]), // postal code
+                            Integer.parseInt(line.split(",")[3]) // age
+                    )));
+            System.out.println(studentList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("_____________________________");
 
     }
 }
