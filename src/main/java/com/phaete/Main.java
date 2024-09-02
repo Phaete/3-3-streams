@@ -86,7 +86,7 @@ public class Main {
                 .map(number -> number * 2)
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.toList());
-        System.out.println(newNumberList);
+        System.out.println("Sorted list: " + newNumberList);
 
 
 
